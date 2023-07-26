@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { HStack, VStack } from "./Flex"
 
 const DEFAULT_BOOK_DETAILS = {
     name: '',
@@ -9,8 +10,8 @@ const DEFAULT_BOOK_DETAILS = {
 
 function Input({ label, onChange, value, name, type }) {
     const id = React.useId()
-    return <>
-        <label htmlFor="name-field">
+    return <VStack>
+        <label htmlFor="name-field" className="form-label">
             {label}{': '}
         </label>
         <input
@@ -20,8 +21,9 @@ function Input({ label, onChange, value, name, type }) {
             type={type}
             value={value}
             onChange={onChange}
+            className='input form-control'
         />
-    </>
+    </VStack>
 }
 
 function BookForm({ handleAddBook, handleClose }) {
@@ -40,41 +42,46 @@ function BookForm({ handleAddBook, handleClose }) {
             e.preventDefault();
             handleAddBook({ ...bookDetails, id: Math.random() })
         }}>
-            <Input
-                name='name'
-                value={bookDetails.name}
-                type='text'
-                onChange={handleInputChange}
-                label={'Book Name'}
-            />
-            <Input
-                name='price'
-                value={bookDetails.price}
-                type='number'
-                onChange={handleInputChange}
-                label={'Price'}
-            />
-            <Input
-                name='category'
-                value={bookDetails.category}
-                type='text'
-                onChange={handleInputChange}
-                label={'Category'}
-            />
-            <label htmlFor="description">
-                Description:
-            </label>
-            <textarea
-                id="description"
-                name="description"
-                value={bookDetails.description}
-                onChange={handleInputChange}
-            />
-            <input type="submit" />
-            <button onClick={handleClose}>Cancel</button>
+            <VStack >
+                <Input
+                    name='name'
+                    value={bookDetails.name}
+                    type='text'
+                    onChange={handleInputChange}
+                    label={'Book Name'}
+                />
+                <Input
+                    name='price'
+                    value={bookDetails.price}
+                    type='number'
+                    onChange={handleInputChange}
+                    label={'Price'}
+                />
+                <Input
+                    name='category'
+                    value={bookDetails.category}
+                    type='text'
+                    onChange={handleInputChange}
+                    label={'Category'}
+                />
+                <label htmlFor="description" className="form-label">
+                    Description:
+                </label>
+                <textarea
+                    id="description"
+                    name="description"
+                    value={bookDetails.description}
+                    onChange={handleInputChange}
+                    className='form-control'
+                />
+
+                <HStack styleProps={{ marginTop: 10, justifyContent: 'center' }}>
+                    <input className="btn btn-info" type="submit" />
+                    <button className="btn btn-danger" onClick={handleClose}>Cancel</button>
+                </HStack>
+            </VStack>
         </form>
     )
 }
 
 export default BookForm
-
